@@ -1,23 +1,45 @@
 import './App.css';
-import Hello from './component/Hello';
-import Changename from './component/Changename';
+import Customer from './components/Customer';
+
+const customers = [
+  {
+  'id' : 1,
+  'gender' : '남자',
+  'name':'홍길동',
+  'birthday':'940121'
+ },
+ {
+  'id' : 2,
+  'gender' : '여자',
+  'name':'이민주',
+  'birthday':'950210'
+ },
+ {
+  'id' : 3,
+  'gender' : '남자',
+  'name':'안재현',
+  'birthday':'870506'
+ }
+]
+
 
 function App() {
-  const name = "tom";
-  const naver = {
-    name:"네이버",
-    url:"https://naver.com"
-  }
+
   return (
     <div className="App">
-      <h1>
-        welcome,{name}
-      </h1>
-      <a href={naver.url}>{naver.name}</a>
-      <Hello />
-      <Changename age={10}/>
-      <Changename age={20}/>
-      <Changename age={30}/>
+      {
+        customers.map(c => {//반복문,key설정해야함 아마도 다 다른걸로
+          return (
+            <Customer
+              key={c.id}
+              id={c.id}
+              gender={c.gender}
+              name={c.name}
+              birthday={c.birthday}
+            />
+          )
+        })
+      }
     </div>
   );
 }
