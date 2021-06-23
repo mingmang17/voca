@@ -6,6 +6,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableBody from '@material-ui/core/TableBody';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
+import React,{useState,useEffect,setState} from 'react';
 
 const rootStyle = {
     width:'100%',
@@ -17,30 +18,22 @@ const tableStyle = {
   minwidth:1080
 };
 
-const customers = [
-  {
-  'id' : 1,
-  'gender' : '남자',
-  'name':'홍길동',
-  'birthday':'940121'
- },
- {
-  'id' : 2,
-  'gender' : '여자',
-  'name':'이민주',
-  'birthday':'950210'
- },
- {
-  'id' : 3,
-  'gender' : '남자',
-  'name':'안재현',
-  'birthday':'870506'
- }
-]
-
 
 function App() {
   //const { classes } = styles;
+
+  const [customers, setcustomers] = useState(); 
+  
+  useEffect(() => { 
+    fetch('/api/customers')
+      .then(res => {
+        return res.json();
+      })
+      .then(data => {
+        setcustomers(data);
+      })
+  },[]);
+
   return (
     <Paper className={rootStyle}>
       <Table className={tableStyle}>
@@ -54,7 +47,7 @@ function App() {
         </TableHead>
         <TableBody>
       {
-        customers.map(c => {//반복문,key설정해야함 아마도 다 다른걸로
+        customers ? customers.map(c => {//반복문,key설정해야함 아마도 다 다른걸로
           return (
             <Customer
               key={c.id}
@@ -64,7 +57,7 @@ function App() {
               birthday={c.birthday}
             />
           )
-        })
+        }) : ''
       }
         </TableBody>
       </Table>
